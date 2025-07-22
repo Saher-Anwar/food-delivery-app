@@ -28,25 +28,25 @@ data "aws_iam_policy_document" "assume_role" {
   }
 }
 
-resource "aws_iam_role" "example" {
+resource "aws_iam_role" "lambda_role" {
   name               = "${local.prefix}_lambda_execution_role"
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }
 
 # Package the Lambda function code
-data "archive_file" "example" {
+data "archive_file" "lambda" {
   type        = "zip"
   source_file = "${path.module}/lambda/handler.py"
   output_path = "${path.module}/lambda/function.zip"
 }
 
 # Lambda function
-resource "aws_lambda_function" "example" {
-  filename         = data.archive_file.example.output_path
+resource "aws_lambda_function" "crud" {
+  filename         = data.archive_file.lambda.output_path
   function_name    = "lambda_handler"
-  role             = aws_iam_role.example.arn
+  role             = aws_iam_role.lambda_role.arn
   handler          = "handler.lambda_handler"
-  source_code_hash = data.archive_file.example.output_base64sha256
+  source_code_hash = data.archive_file.lambda.output_base64sha256
 
   runtime = "python3.13"
 
