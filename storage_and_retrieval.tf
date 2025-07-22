@@ -9,7 +9,7 @@ resource "aws_dynamodb_table" "users" {
 
   attribute {
     name = "_id"
-    type = "N"
+    type = "S"
   }
 }
 
@@ -40,7 +40,8 @@ data "aws_iam_policy_document" "lambda_dynamodb_policy" {
       "dynamodb:UpdateItem",
       "dynamodb:DeleteItem",
       "dynamodb:Scan",
-      "dynamodb:Query"
+      "dynamodb:Query", 
+      "dynamodb:BatchWriteItem"
     ]
     resources = [aws_dynamodb_table.users.arn]
   }
