@@ -1,13 +1,7 @@
-# Terraform state files (never commit these!)
-terraform.tfstate
-terraform.tfstate.backup
-terraform.tfstate.*.backup
+# Terraform
+**/.terraform/*
 *.tfstate
 *.tfstate.*
-
-# Local Terraform directories (plugins, lock files)
-.terraform/
+terraform.tfstate.backup
 .terraform.lock.hcl
-
-# Crash logs (if any)
 crash.log
