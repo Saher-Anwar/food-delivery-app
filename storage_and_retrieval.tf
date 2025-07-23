@@ -11,6 +11,10 @@ resource "aws_dynamodb_table" "users" {
     name = "_id"
     type = "S"
   }
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 # Lambda Creation
@@ -100,6 +104,7 @@ resource "aws_lambda_permission" "app" {
   function_name = aws_lambda_function.lambda_read_only.function_name
   principal = "apigateway.amazonaws.com"
   source_arn = "${aws_api_gateway_rest_api.app.execution_arn}/*/*"
+  depends_on = [ aws_lambda_function.lambda_read_only ]
 }
 
 # API Deployment Stage
