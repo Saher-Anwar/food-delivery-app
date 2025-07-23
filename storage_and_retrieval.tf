@@ -11,10 +11,6 @@ resource "aws_dynamodb_table" "users" {
     name = "_id"
     type = "S"
   }
-
-  lifecycle {
-    prevent_destroy = true
-  }
 }
 
 # Lambda Creation
